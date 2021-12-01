@@ -1,7 +1,12 @@
 export function readTextBuffer(importInfo: string): string {
     const pathName = new URL(importInfo).pathname;
     const newPath = pathName.replace(".ts", ".txt");
-    if (Deno.statSync(newPath) == null) throw Error("File doesn't exist");
+    try {
+        Deno.statSync(newPath)
+    } catch (e) {
+        console.log("File doesn't exist");
+        throw e;
+    }
     return Deno.readTextFileSync(newPath).trim();
 }
 
