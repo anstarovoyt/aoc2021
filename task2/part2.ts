@@ -13,19 +13,16 @@ rows.forEach(el => {
     const strings = el.split(" ");
     const offset = Number(strings[1]);
     switch (strings[0]) {
-        case "forward": {
+        case "forward":
             state.horizontal += offset;
             state.depth += state.aim * offset
             break;
-        }
-        case "down": {
+        case "down":
             state.aim += offset;
             break;
-        }
-        case "up": {
+        case "up":
             state.aim -= offset;
             break;
-        }
     }
 })
 
