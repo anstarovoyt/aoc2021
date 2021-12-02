@@ -10,6 +10,10 @@ export function readTextBuffer(importInfo: string): string {
     return Deno.readTextFileSync(newPath).trim();
 }
 
+export function split(buffer: string): string[] {
+    return buffer.split("\n");
+}
+
 export function readNumbers(buffer: string): number[] {
-    return buffer.split("\n").map(Number);
+    return split(buffer).map(Number);
 }
