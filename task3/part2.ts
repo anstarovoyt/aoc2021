@@ -27,8 +27,8 @@ function filterOutAll(most: boolean) {
     return rows[0];
 }
 
-const most = filterOutAll(true);
-const least = filterOutAll(false);
+const mostString = filterOutAll(true);
+const leastString = filterOutAll(false);
 
-console.log(parseInt(most, 2) * parseInt(least, 2));
+console.log(parseInt(mostString, 2) * parseInt(leastString, 2));
 Deno.exit();
