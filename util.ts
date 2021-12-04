@@ -4,8 +4,7 @@ export function readTextBuffer(importInfo: string): string {
     try {
         Deno.statSync(newPath)
     } catch (e) {
-        console.log("File doesn't exist");
-        throw e;
+        error("File doesn't exist");
     }
     return Deno.readTextFileSync(newPath).trim();
 }
@@ -16,4 +15,9 @@ export function split(buffer: string): string[] {
 
 export function readNumbers(buffer: string): number[] {
     return split(buffer).map(Number);
+}
+
+export function error(text: string, e?: unknown): never {
+    console.log(text);
+    throw e ?? new Error(text);
 }
