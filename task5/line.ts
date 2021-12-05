@@ -21,12 +21,7 @@ export class Line {
         const startRange = Math.min(this.y1, this.y2);
         const endRange = Math.max(this.y1, this.y2);
         for (let i = startRange; i <= endRange; i++) {
-            let row = table[this.x1];
-            if (row == null) {
-                row = table[this.x1] = [];
-            }
-            const value = row[i];
-            row[i] = value ? value + 1 : 1;
+            Line.markPoint(table, this.x1, i);
         }
     }
 
@@ -34,12 +29,7 @@ export class Line {
         const startRange = Math.min(this.x1, this.x2);
         const endRange = Math.max(this.x1, this.x2);
         for (let i = startRange; i <= endRange; i++) {
-            let row = table[i];
-            if (row == undefined) {
-                row = table[i] = [];
-            }
-            const value = row[this.y1];
-            row[this.y1] = value ? value + 1 : 1;
+            Line.markPoint(table, i, this.y1);
         }
     }
 
@@ -55,12 +45,15 @@ export class Line {
         if (startRangeY + sign * deltaX != endRangeY) throw error("Wrong")
 
         for (let i = 0; i <= deltaX; i++) {
-            let row = table[startRangeX + i];
-            if (row == undefined) {
-                row = table[startRangeX + i] = [];
-            }
-            const value = row[startRangeY + sign * i];
-            row[startRangeY + sign * i] = value ? value + 1 : 1;
+            Line.markPoint(table, startRangeX + i, startRangeY + sign * i);
         }
+    }
+
+    private static markPoint(table: number[][], currentX: number, currentY: number) {
+        let row = table[currentX];
+        if (row == undefined) row = table[currentX] = [];
+
+        const value = row[currentY];
+        row[currentY] = value ? value + 1 : 1;
     }
 }
