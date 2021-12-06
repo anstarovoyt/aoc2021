@@ -8,7 +8,7 @@ let currentArray = numbers;
 for (let _i = 0; _i < days; _i++) {
     let toAdd = 0;
     const newArray = [];
-    for (let i = 0; i < currentArray.length; i++){
+    for (let i = 0; i < currentArray.length; i++) {
         const number = currentArray[i];
         const isZero = number == 0;
         const newNumber = isZero ? 6 : number - 1;
