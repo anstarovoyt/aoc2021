@@ -4,15 +4,11 @@ const data = readTextBuffer(import.meta.url);
 const numbers = data.split(",").map(Number);
 const days = 256;
 
-function fill(arr: number[]): number[] {
-    for (let i = 0; i <= 8; i++) {
-        if (arr[i] == undefined) arr[i] = 0;
-    }
-
-    return arr;
+function createArray(): number[] {
+    return Array(9).fill(0);
 }
 
-const counters: number[] = fill([]);
+const counters: number[] = createArray();
 
 for (const el of numbers) {
     counters[el] = counters[el] + 1;
@@ -20,7 +16,7 @@ for (const el of numbers) {
 
 let currentCounter = counters;
 for (let _i = 0; _i < days; _i++) {
-    const newCounter: number[] = fill([]);
+    const newCounter: number[] = createArray();
 
     let restartedElements = 0;
     for (let i = 0; i <= 8; i++) {
