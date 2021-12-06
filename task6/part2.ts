@@ -14,23 +14,24 @@ for (const el of numbers) {
     counters[el] = counters[el] + 1;
 }
 
-let currentCounter = counters;
-for (let _i = 0; _i < days; _i++) {
-    const newCounter: number[] = createArray();
-
-    let restartedElements = 0;
+function tick(currentCounter: number[]) {
+    const newCounter = createArray();
     for (let i = 0; i <= 8; i++) {
         const currentNumber = currentCounter[i];
         if (i == 0) {
-            newCounter[8] = currentNumber;
-            restartedElements = restartedElements + currentNumber;
+            newCounter[8] += currentNumber;
+            newCounter[6] += currentNumber;
         } else {
-            newCounter[i - 1] = currentNumber;
+            newCounter[i - 1] += currentNumber;
         }
     }
 
-    newCounter[6] += restartedElements;
-    currentCounter = newCounter;
+    return newCounter;
+}
+
+let currentCounter = counters;
+for (let _i = 0; _i < days; _i++) {
+    currentCounter = tick(currentCounter);
 }
 
 console.log(currentCounter.reduce((prev, el) => prev + el));
