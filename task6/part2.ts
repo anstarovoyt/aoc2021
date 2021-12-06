@@ -29,7 +29,7 @@ for (let _i = 0; _i < days; _i++) {
         }
     }
 
-    newCounter[6] = newCounter[6] + restartedElements;
+    newCounter[6] += restartedElements;
     currentCounter = newCounter;
 }
 
