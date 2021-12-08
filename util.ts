@@ -4,7 +4,7 @@ export function readTextBuffer(importInfo: string): string {
     try {
         Deno.statSync(newPath)
     } catch (e) {
-        error("File doesn't exist");
+        error("File doesn't exist", e);
     }
     return Deno.readTextFileSync(newPath).trim();
 }
