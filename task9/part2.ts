@@ -1,12 +1,9 @@
-import {readTextBuffer, split} from "../util.ts";
-import {Area, getLocalMins, surrounded} from "./local-min.ts";
+import {getLocalMins, surrounded} from "./local-min.ts";
+import {parseNumberArea} from "../util.ts";
 
-const buffer = readTextBuffer(import.meta.url);
-const lines = split(buffer);
 
-const numbers: Area = lines.map(line => line.split("").map(Number));
+const numbers = parseNumberArea(import.meta.url);
 const mins = getLocalMins(numbers);
-
 const components: number[] = [];
 
 function markComponent(min: [number, number]) {

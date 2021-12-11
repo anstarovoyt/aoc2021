@@ -21,3 +21,12 @@ export function error(text: string, e?: unknown): never {
     console.log(text);
     throw e ?? new Error(text);
 }
+
+export function parseNumberArea(importInfo: string): Area {
+    const buffer = readTextBuffer(importInfo);
+    const lines = split(buffer);
+
+    return lines.map(line => line.split("").map(Number));
+}
+
+export type Area = (number | undefined)[][];

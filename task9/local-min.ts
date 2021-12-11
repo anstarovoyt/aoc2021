@@ -1,3 +1,5 @@
+import {Area} from "../util.ts";
+
 export function isLocalMin(numbers: Area, p1: number, p2: number) {
     for (const [offset1, offset2] of surrounded(numbers, p1, p2)) {
         const valueAt = numbers[offset1][offset2];
@@ -38,4 +40,3 @@ export function surrounded(numbers: Area, p1: number, p2: number): [number, numb
     return result;
 }
 
-export type Area = (number | undefined)[][];
