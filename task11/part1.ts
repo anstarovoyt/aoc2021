@@ -1,4 +1,4 @@
-import {parseNumberArea} from "../util.ts";
+import {parseNumberArea} from "../common/util.ts";
 import {tick} from "./task11-common.ts";
 
 const numbers = parseNumberArea(import.meta.url);

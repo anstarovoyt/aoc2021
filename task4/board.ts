@@ -1,4 +1,4 @@
-import {error} from "../util.ts";
+import {error} from "../common/util.ts";
 
 export class Board {
     constructor(private arr: number[][]) {

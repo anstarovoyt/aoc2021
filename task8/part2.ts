@@ -1,4 +1,4 @@
-import {readTextBuffer, split} from "../util.ts";
+import {readTextBuffer, split} from "../common/util.ts";
 import {NumberLine} from "./NumberLine.ts";
 
 const data = split(readTextBuffer(import.meta.url)).map(el => new NumberLine(el));

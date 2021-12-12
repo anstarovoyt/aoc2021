@@ -1,4 +1,4 @@
-import {error, readTextBuffer, split} from "../util.ts";
+import {error, readTextBuffer, split} from "../common/util.ts";
 import {braces} from "./braces.ts";
 
 const lines = split(readTextBuffer(import.meta.url));

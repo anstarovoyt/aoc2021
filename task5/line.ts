@@ -1,4 +1,4 @@
-import {error} from "../util.ts";
+import {error} from "../common/util.ts";
 
 export class Line {
     readonly x1: number;

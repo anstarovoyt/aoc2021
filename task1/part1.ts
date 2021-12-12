@@ -1,4 +1,4 @@
-import {readNumbers, readTextBuffer} from "../util.ts";
+import {readNumbers, readTextBuffer} from "../common/util.ts";
 
 const numbers = readNumbers(readTextBuffer(import.meta.url));
 

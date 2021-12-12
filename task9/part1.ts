@@ -1,4 +1,4 @@
-import {readTextBuffer, split} from "../util.ts";
+import {readTextBuffer, split} from "../common/util.ts";
 import {getLocalMins} from "./local-min.ts";
 
 const lines = split(readTextBuffer(import.meta.url));

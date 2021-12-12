@@ -1,4 +1,4 @@
-import {NumberGrid, surrounded} from "../util.ts";
+import {NumberGrid, surrounded} from "../common/util.ts";
 
 export function tick(numbers: NumberGrid) {
     const flashes: [number, number][] = [];

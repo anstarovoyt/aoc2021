@@ -1,4 +1,4 @@
-import {error} from "../util.ts";
+import {error} from "../common/util.ts";
 
 const a = 0;
 const b = 1;

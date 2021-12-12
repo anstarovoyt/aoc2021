@@ -1,4 +1,4 @@
-import {readTextBuffer, split} from "../util.ts";
+import {readTextBuffer, split} from "../common/util.ts";
 import {Line} from "./line.ts";
 
 const data = readTextBuffer(import.meta.url);

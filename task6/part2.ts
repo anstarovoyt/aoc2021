@@ -1,4 +1,4 @@
-import {readTextBuffer} from "../util.ts";
+import {readTextBuffer} from "../common/util.ts";
 
 const data = readTextBuffer(import.meta.url);
 const numbers = data.split(",").map(Number);

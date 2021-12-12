@@ -1,5 +1,5 @@
 import {getLocalMins} from "./local-min.ts";
-import {parseNumberArea, surrounded} from "../util.ts";
+import {parseNumberArea, surrounded} from "../common/util.ts";
 
 
 const numbers = parseNumberArea(import.meta.url);
