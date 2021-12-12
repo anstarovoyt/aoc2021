@@ -1,7 +1,7 @@
 import {braces} from "./braces.ts";
-import {error, readTextBuffer, split} from "../common/util.ts";
+import {error, readTextBuffer, splitLines} from "../common/util.ts";
 
-const lines = split(readTextBuffer(import.meta.url));
+const lines = splitLines(readTextBuffer(import.meta.url));
 
 function cost(symbol: string) {
     switch (symbol) {

@@ -1,7 +1,7 @@
-import {readTextBuffer, split} from "../common/util.ts";
+import {readTextBuffer, splitLines} from "../common/util.ts";
 import {getLocalMins} from "./local-min.ts";
 
-const lines = split(readTextBuffer(import.meta.url));
+const lines = splitLines(readTextBuffer(import.meta.url));
 
 const numbers = lines.map(line => line.split("").map(Number));
 const mins = getLocalMins(numbers);

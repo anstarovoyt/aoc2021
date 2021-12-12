@@ -1,7 +1,7 @@
-import {readTextBuffer, split} from "../common/util.ts";
+import {readTextBuffer, splitLines} from "../common/util.ts";
 
 const data = readTextBuffer(import.meta.url);
-const rows = split(data);
+const rows = splitLines(data);
 
 const state = {
     horizontal: 0,

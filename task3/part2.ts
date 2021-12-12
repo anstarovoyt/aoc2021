@@ -1,7 +1,7 @@
-import {readTextBuffer, split} from "../common/util.ts";
+import {readTextBuffer, splitLines} from "../common/util.ts";
 
 const data = readTextBuffer(import.meta.url);
-const rowRows = split(data);
+const rowRows = splitLines(data);
 
 function filterOut(rows: string[], bit: number, most: boolean) {
     const bitCounter = rows.reduce((prev, el) => el[bit] == "1" ? prev + 1 : prev, 0);

@@ -7,10 +7,13 @@ const nodes = new Map<string, GraphNode>();
 
 buildGraph(lines, nodes);
 
-function counts(startNode: GraphNode, endNode: GraphNode, visited: Set<string> = new Set()) {
+function counts(startNode: GraphNode, endNode: GraphNode, visited: Set<string> = new Set(), hasTwiceVisited = false) {
     if (startNode == endNode) return 1;
     if (countVisiting(startNode)) {
-        if (visited.has(startNode.label)) return 0;
+        if (visited.has(startNode.label)) {
+            if (hasTwiceVisited || startNode == nodes.get("start")) return 0;
+            hasTwiceVisited = true;
+        }
         visited.add(startNode.label);
     }
 
@@ -18,7 +21,7 @@ function counts(startNode: GraphNode, endNode: GraphNode, visited: Set<string> =
 
     for (const node of startNode.nodes) {
         const newVisited = new Set(visited);
-        result += counts(node, endNode, newVisited);
+        result += counts(node, endNode, newVisited, hasTwiceVisited);
     }
 
     return result;

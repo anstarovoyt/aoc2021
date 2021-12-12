@@ -1,8 +1,8 @@
-import {readTextBuffer, split} from "../common/util.ts";
+import {readTextBuffer, splitLines} from "../common/util.ts";
 import {parseBoards, parseInput} from "./board.ts";
 
 const data = readTextBuffer(import.meta.url);
-const rows = split(data);
+const rows = splitLines(data);
 
 const inputNumbers = parseInput(rows[0]);
 const boards = parseBoards(rows);

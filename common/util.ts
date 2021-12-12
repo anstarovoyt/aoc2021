@@ -9,12 +9,12 @@ export function readTextBuffer(importInfo: string): string {
     return Deno.readTextFileSync(newPath).trim();
 }
 
-export function split(buffer: string): string[] {
+export function splitLines(buffer: string): string[] {
     return buffer.split("\n");
 }
 
 export function readNumbers(buffer: string): number[] {
-    return split(buffer).map(Number);
+    return splitLines(buffer).map(Number);
 }
 
 export function error(text: string, e?: unknown): never {
@@ -24,7 +24,7 @@ export function error(text: string, e?: unknown): never {
 
 export function parseNumberArea(importInfo: string): NumberGrid {
     const buffer = readTextBuffer(importInfo);
-    const lines = split(buffer);
+    const lines = splitLines(buffer);
 
     return lines.map(line => line.trim().split("").map(Number));
 }
