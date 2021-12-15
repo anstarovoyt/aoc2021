@@ -16,36 +16,64 @@ function calcSimplePath(grid: NumberGrid): number {
 }
 
 const simplePath = calcSimplePath(grid);
+console.log("Simple: " + simplePath);
+let minPath = simplePath;
 
-function calcPath(grid: NumberGrid, cords: [number, number], paths: Set<string>, risk: number) {
-    if (cords[0] == grid.length - 1 && cords[1] == grid[0].length - 1) {
-        //stop
-        return risk;
+function isLastCord(grid: NumberGrid, cords: [number, number]) {
+    return cords[0] == grid.length - 1 && cords[1] == grid[0].length - 1;
+}
+
+const minCostMap: NumberGrid = [];
+
+function calcPath(grid: NumberGrid, cords: [number, number], currentRisk: number,
+                  paths: Set<string> = new Set<string>([[0, 0].toString()])) {
+    if (isLastCord(grid, cords)) {
+        return currentRisk;
     }
 
     const points = surrounded(grid, cords[0], cords[1]);
-    let min = simplePath;
-    for (const point of points) {
 
-        let result = risk;
-        if (paths.has(point.toString())) {
+    const toProcess = [];
+
+    for (const point of points) {
+        const pointString = point.toString();
+        if (paths.has(pointString)) {
             continue;
         }
 
-        result += grid[point[0]][point[1]]!;
-        if (result > simplePath) continue;
+        const riskWithNext = currentRisk + grid[point[0]][point[1]]!;
 
-        const set = new Set(paths);
-        set.add(point.toString());
+        if (riskWithNext >= minPath) continue;
 
-        const afterCalc = calcPath(grid, point, set, result);
-        if (afterCalc < min) {
-            min = afterCalc;
+        let line = minCostMap[point[0]];
+        if (line == undefined) {
+            line = [];
+            minCostMap[point[0]] = line;
+        }
+
+        const value = line[point[1]];
+        if (value != undefined && riskWithNext > value) {
+            continue;
+        }
+
+        line[point[1]] = riskWithNext;
+        toProcess.push(point);
+    }
+
+    for (const point of toProcess) {
+        const riskWithNext = currentRisk + grid[point[0]][point[1]]!;
+        const pointString = point.toString();
+        paths.add(pointString);
+        const afterCalc = calcPath(grid, point, riskWithNext, paths);
+        paths.delete(pointString);
+
+        if (afterCalc < minPath) {
+            minPath = afterCalc;
         }
     }
 
-    return min;
+    return minPath;
 }
 
-console.log(calcPath(grid, [0, 0], new Set<string>([[0, 0].toString()]), 0));
+console.log(calcPath(grid, [0, 0], 0));
 Deno.exit();
