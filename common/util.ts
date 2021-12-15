@@ -1,6 +1,6 @@
-export function readTextBuffer(importInfo: string): string {
+export function readTextBuffer(importInfo: string, replacement: [string, string] = [".ts", ".txt"]): string {
     const pathName = new URL(importInfo).pathname;
-    const newPath = pathName.replace(".ts", ".txt");
+    const newPath = pathName.replace(replacement[0], replacement[1]);
     try {
         Deno.statSync(newPath)
     } catch (e) {
@@ -22,11 +22,24 @@ export function error(text: string, e?: unknown): never {
     throw e ?? new Error(text);
 }
 
-export function parseNumberGrid(importInfo: string): NumberGrid {
-    const buffer = readTextBuffer(importInfo);
+export function parseDataAsGrid(buffer: string) {
     const lines = splitLines(buffer);
 
     return lines.map(line => line.trim().split("").map(Number));
+}
+
+export function parseNumberGrid(importInfo: string): NumberGrid {
+    return parseDataAsGrid(readTextBuffer(importInfo));
+}
+
+export function printGrid(grid: NumberGrid) {
+    for (let i = 0; i < grid.length; i++) {
+        let row = "";
+        for (let j = 0; j < grid[0].length; j++) {
+            row += grid[i][j]
+        }
+        console.log(row);
+    }
 }
 
 export type NumberGrid = (number | undefined)[][];

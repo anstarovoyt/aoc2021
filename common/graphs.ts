@@ -1,3 +1,5 @@
+import {NumberGrid} from "./util.ts";
+
 export class GraphNode {
     nodes: GraphNode[] = [];
 
@@ -13,3 +15,11 @@ export class GraphNode {
     }
 }
 
+export function initOrGetLine(result: NumberGrid, lineNumber: number): (number|undefined)[] {
+    let resultLine = result[lineNumber];
+    if (resultLine == undefined) {
+        resultLine = [];
+        result[lineNumber] = resultLine;
+    }
+    return resultLine;
+}
