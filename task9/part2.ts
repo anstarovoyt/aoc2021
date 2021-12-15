@@ -1,8 +1,8 @@
 import {getLocalMins} from "./local-min.ts";
-import {parseNumberArea, surrounded} from "../common/util.ts";
+import {parseNumberGrid, surrounded} from "../common/util.ts";
 
 
-const numbers = parseNumberArea(import.meta.url);
+const numbers = parseNumberGrid(import.meta.url);
 const mins = getLocalMins(numbers);
 const components: number[] = [];
 

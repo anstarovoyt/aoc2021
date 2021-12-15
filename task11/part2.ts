@@ -1,7 +1,7 @@
-import {parseNumberArea} from "../common/util.ts";
+import {parseNumberGrid} from "../common/util.ts";
 import {tick} from "./task11-common.ts";
 
-const numbers = parseNumberArea(import.meta.url);
+const numbers = parseNumberGrid(import.meta.url);
 
 let value = 0;
 while (true) {

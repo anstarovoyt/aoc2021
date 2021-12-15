@@ -22,7 +22,7 @@ export function error(text: string, e?: unknown): never {
     throw e ?? new Error(text);
 }
 
-export function parseNumberArea(importInfo: string): NumberGrid {
+export function parseNumberGrid(importInfo: string): NumberGrid {
     const buffer = readTextBuffer(importInfo);
     const lines = splitLines(buffer);
 
