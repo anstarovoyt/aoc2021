@@ -1,4 +1,4 @@
-import {error} from "../common/util.ts";
+import {error, variants} from "../common/util.ts";
 
 const a = 0;
 const b = 1;
@@ -21,26 +21,6 @@ const r8 = [a, b, c, d, e, f, g];
 const r9 = [a, b, c, d, f, g];
 
 const constraints: number[][] = [r0, r1, r2, r3, r4, r5, r6, r7, r8, r9];
-
-function variants(inputArr: string[]) {
-    const result: string[][] = [];
-
-    const permute = (toAppend: string[], leftPart: string[] = []) => {
-        if (toAppend.length === 0) {
-            result.push(leftPart)
-        } else {
-            for (let i = 0; i < toAppend.length; i++) {
-                const curr = toAppend.slice();
-                const next = curr.splice(i, 1);
-                permute(curr.slice(), leftPart.concat(next))
-            }
-        }
-    }
-
-    permute(inputArr)
-
-    return result;
-}
 
 const allCombinations = new Set(variants(["a", "b", "c", "d", "e", "f", "g"]));
 

@@ -62,3 +62,23 @@ export function surrounded(numbers: NumberGrid, p1: number, p2: number, includeD
 
     return result;
 }
+
+export function variants(inputArr: string[]): string[][] {
+    const result: string[][] = [];
+
+    const permute = (toAppend: string[], leftPart: string[] = []) => {
+        if (toAppend.length === 0) {
+            result.push(leftPart)
+        } else {
+            for (let i = 0; i < toAppend.length; i++) {
+                const curr = toAppend.slice();
+                const next = curr.splice(i, 1);
+                permute(curr.slice(), leftPart.concat(next))
+            }
+        }
+    }
+
+    permute(inputArr)
+
+    return result;
+}
