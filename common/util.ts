@@ -10,7 +10,7 @@ export function readTextBuffer(importInfo: string, replacement: [string, string]
 }
 
 export function splitLines(buffer: string): string[] {
-    return buffer.split("\n");
+    return buffer.trim().split("\n");
 }
 
 export function readNumbers(buffer: string): number[] {
