@@ -5,11 +5,8 @@ export class ALUState {
     x = 0;
     y = 0;
     z = 0;
-    input;
-    inputIndex = 0;
 
-    constructor(input?: string, prevState?: ALUState) {
-        this.input = input == undefined ? "" : input;
+    constructor(prevState?: ALUState) {
         if (prevState != undefined) {
             this.w = prevState.w;
             this.x = prevState.x;
@@ -18,17 +15,13 @@ export class ALUState {
         }
     }
 
-    readInput(): number {
-        return Number(this.input[this.inputIndex++]);
-    }
-
     toString() {
         return `w: ${this.w}, x: ${this.x}, y: ${this.y}, z: ${this.z}`
     }
 }
 
 export abstract class Op {
-    abstract apply(state: ALUState): ALUState;
+    abstract apply(state: ALUState, input: () => number): ALUState;
 }
 
 export class InpOp extends Op {
@@ -40,8 +33,8 @@ export class InpOp extends Op {
         this.to = to;
     }
 
-    apply(state: ALUState): ALUState {
-        state[this.to] = state.readInput();
+    apply(state: ALUState, inputProducer: () => number): ALUState {
+        state[this.to] = inputProducer();
         return state;
     }
 
@@ -146,15 +139,52 @@ export function parseOps(lines: string[]): Op[] {
     })
 }
 
-export function runALU(state: ALUState, ops: Op[]): ALUState {
+export function runALU(state: ALUState, ops: Op[], inputProducer: () => number): ALUState {
     let curr = state;
     if (!(ops[0] instanceof InpOp)) error("Incorrect ops");
     for (const op of ops) {
-        curr = op.apply(curr);
+        curr = op.apply(curr, inputProducer);
     }
-
-    if (state.inputIndex != state.input.length) error("Incomplete input read");
 
     return curr;
 }
 
+export function applyBySteps(ops: Op[], min: boolean) {
+    const inputPositions = [];
+
+    for (let i = 0; i < ops.length; i++) {
+        if (ops[i] instanceof InpOp) inputPositions.push(i);
+    }
+
+
+    let states: Map<number, number> = new Map();
+    states.set(0, 0);
+    for (let ip = 0; ip < inputPositions.length; ip++) {
+        const subOps = ops.slice(inputPositions[ip], inputPositions[ip + 1]);
+        const newStates: Map<number, number> = new Map();
+        const isLast = ip == inputPositions.length - 1;
+        for (const [prevState, prevNumber] of states) {
+            for (let i = 1; i <= 9; i++) {
+                const state = new ALUState();
+                state.z = prevState;
+                const newState = runALU(state, subOps, () => i);
+                const key = newState.z;
+                if (isLast) if (key != 0) continue;
+
+                const value = newStates.get(key);
+                const currValue = prevNumber * 10 + i;
+                if (value == undefined || (min ? (currValue < value) : (currValue > value))) {
+                    newStates.set(key, currValue);
+                }
+            }
+        }
+        console.log(`Input ${ip + 1}, state counter: ${newStates.size}`);
+        states = newStates;
+    }
+
+    for (const [value, number] of states) {
+        if (value == 0) console.log(number);
+    }
+
+    return;
+}
