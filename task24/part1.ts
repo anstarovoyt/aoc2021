@@ -1,20 +1,36 @@
 import {readTextBuffer, splitLines} from "../common/util.ts";
-import {ALUState, parseOps, runALU} from "./task24-common.ts";
+import {ALUState, InpOp, Op, parseOps, runALU} from "./task24-common.ts";
 
 const lines = splitLines(readTextBuffer(import.meta.url));
-const ops = parseOps(lines);
+const ops: Op[] = parseOps(lines);
 
-for (let i = 13579246899999; i < 100000000000000; i++) {
-    console.log(i);
-    const input = i.toString().padStart(14, "0");
-    if (input.includes("0")) continue;
+const inputPositions = [];
 
-    const state = new ALUState(input);
+for (let i = 0; i < ops.length; i++) {
+    if (ops[i] instanceof InpOp) inputPositions.push(i);
+}
 
-    const result = runALU(state, ops);
-    if (result.z == 0) {
-        console.log("Stop:" + i);
-        break;
+
+
+const firstOps = ops.slice(0, inputPositions[1]);
+
+const statesAfterFirst: ALUState[] = [];
+
+for (let i = 1; i <= 9; i++) {
+    const state = new ALUState(i.toString());
+    statesAfterFirst.push(runALU(state, firstOps));
+}
+
+const statesAfterSecond = [];
+
+const secondOps = ops.slice(inputPositions[1], inputPositions[2]);
+
+for (let i = 0; i <= 9; i++) {
+    for (const prevState of statesAfterFirst) {
+        const state = new ALUState(i.toString(), prevState);
+        const result = runALU(state, secondOps);
+        console.log(result);
+        statesAfterSecond.push(result);
     }
 }
 

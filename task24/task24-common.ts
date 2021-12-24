@@ -8,12 +8,22 @@ export class ALUState {
     input;
     inputIndex = 0;
 
-    constructor(input?: string) {
+    constructor(input?: string, prevState?: ALUState) {
         this.input = input == undefined ? "" : input;
+        if (prevState != undefined) {
+            this.w = prevState.w;
+            this.x = prevState.x;
+            this.y = prevState.y;
+            this.z = prevState.z;
+        }
     }
 
     readInput(): number {
         return Number(this.input[this.inputIndex++]);
+    }
+
+    toString() {
+        return `w: ${this.w}, x: ${this.x}, y: ${this.y}, z: ${this.z}`
     }
 }
 
@@ -21,7 +31,7 @@ export abstract class Op {
     abstract apply(state: ALUState): ALUState;
 }
 
-class InpOp extends Op {
+export class InpOp extends Op {
     to: Registers;
 
     constructor(to: string) {
@@ -138,6 +148,7 @@ export function parseOps(lines: string[]): Op[] {
 
 export function runALU(state: ALUState, ops: Op[]): ALUState {
     let curr = state;
+    if (!(ops[0] instanceof InpOp)) error("Incorrect ops");
     for (const op of ops) {
         curr = op.apply(curr);
     }
