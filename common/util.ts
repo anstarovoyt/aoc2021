@@ -32,14 +32,21 @@ export function parseNumberGrid(importInfo: string): NumberGrid {
     return parseDataAsGrid(readTextBuffer(importInfo));
 }
 
-export function printGrid(grid: NumberGrid) {
+export function printGrid(grid: unknown[][]) {
+    const elements = grid.reduce((previousValue, currentValue) => Math.max(previousValue, currentValue.length),0);
+
+    console.log("#".repeat(elements));
     for (let i = 0; i < grid.length; i++) {
         let row = "";
-        for (let j = 0; j < grid[0].length; j++) {
-            row += grid[i][j]
+        const line = grid[i];
+        for (let j = 0; j < elements; j++) {
+            const el = line == undefined ? undefined : line[j];
+            row += (el == undefined) ? "." : el;
         }
         console.log(row);
     }
+    console.log("#".repeat(elements));
+    console.log();
 }
 
 export type NumberGrid = (number | undefined)[][];
